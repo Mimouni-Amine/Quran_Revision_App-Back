@@ -1,0 +1,1 @@
+drop table collaborateur, log, databasechangeloglock, databasechangelog;
