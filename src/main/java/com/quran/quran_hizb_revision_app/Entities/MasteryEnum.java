@@ -6,6 +6,9 @@ public enum MasteryEnum {
     Good("without mushaf most of the time"),
     Master("No need for the mushaf Everything is in my Brain");
 
+
+
+
     private final String value;
 
     MasteryEnum(String value) {
