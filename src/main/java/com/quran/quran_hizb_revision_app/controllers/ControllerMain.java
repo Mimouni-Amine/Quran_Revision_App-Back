@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,14 +27,7 @@ public class ControllerMain {
         this.idaoRevision = idaoRevision;
     }
 
-/*    @GetMapping("/all-quarters")
-    public ResponseEntity<List<Revision>> getAllTheQuarters(){
-        List<Revision> myListOfRevisions= idaoRevision.findAll();
-        //idaoRevision.findAll();
-       // Revision revision1 = new Revision(3, 45.2, MasteryEnum.Average, new Date(25), false);
-      //  return new ResponseEntity<>(myListOfRevisions, HttpStatus.OK);
-        return idaoRevision.findAll();
-    }*/
+
 
     @GetMapping("/all-quarters")
     public ResponseEntity<List<Revision>> getAllTheQuarters(){
@@ -42,6 +36,15 @@ public class ControllerMain {
 
         //Return the Get Response
         return new ResponseEntity<>(myListOfRevisions, HttpStatus.OK);
+    }
+
+    @PostMapping("/change-mastery")
+    public void changeMasteryOfOneRevision(){
+        //find Revision By Quarter Number
+        Revision revision= idaoRevision.findRevisionByQuarterNumber(45.1);
+        revision.setMastery(MasteryEnum.Good);
+        //update the Revision
+        idaoRevision.save(revision);
     }
 
 

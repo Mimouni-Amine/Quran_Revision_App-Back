@@ -7,6 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface IDAORevision extends JpaRepository <Revision, Integer> {
-    //@Query("select r from Revision r WHERE r.id=1")
+
    public List<Revision> findAllByOrderByQuarterNumberAsc();
+
+   public Revision findRevisionByQuarterNumber(Double f);
+
+   public Revision findRevisionById(int a);
 }

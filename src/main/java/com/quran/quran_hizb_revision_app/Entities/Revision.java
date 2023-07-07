@@ -17,10 +17,10 @@ public class Revision {
 
     @Column(name = "quarter_number")
     //NOT NULL
-    private Float quarterNumber;
-
+    private Double quarterNumber;
+    @Enumerated(EnumType.STRING)
     @Column(name = "mastery")
-    private String mastery;
+    private MasteryEnum mastery;
 
     @Column(name = "time_updated")
     private Date timeUpdated;
@@ -28,7 +28,7 @@ public class Revision {
     @Column(name = "urgency")
     private boolean urgency;
 
-    public Revision(Integer id, Float quarterNumber, String mastery, Date timeUpdated, boolean urgency) {
+    public Revision(Integer id, Double quarterNumber, MasteryEnum mastery, Date timeUpdated, boolean urgency) {
         this.id = id;
         this.quarterNumber = quarterNumber;
         this.mastery = mastery;
@@ -48,19 +48,19 @@ public class Revision {
         this.id = id;
     }
 
-    public Float getQuarterNumber() {
+    public Double getQuarterNumber() {
         return quarterNumber;
     }
 
-    public void setQuarterNumber(Float quarterNumber) {
+    public void setQuarterNumber(Double quarterNumber) {
         this.quarterNumber = quarterNumber;
     }
 
-    public String getMastery() {
+    public MasteryEnum getMastery() {
         return mastery;
     }
 
-    public void setMastery(String mastery) {
+    public void setMastery(MasteryEnum mastery) {
         this.mastery = mastery;
     }
 
@@ -79,6 +79,4 @@ public class Revision {
     public void setUrgency(boolean urgency) {
         this.urgency = urgency;
     }
-
-    //TODO: REimplement MasterEnum
 }
