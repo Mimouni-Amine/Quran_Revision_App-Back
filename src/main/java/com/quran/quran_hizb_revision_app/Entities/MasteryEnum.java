@@ -1,6 +1,7 @@
 package com.quran.quran_hizb_revision_app.Entities;
 
 public enum MasteryEnum {
+    Empty ("Didn't Start Yet"),
     Bad("many Mistakes Not Good"),
     Average("With Mushaf sometimes"),
     Good("without mushaf most of the time"),

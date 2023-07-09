@@ -10,10 +10,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
-@Table(name = "revision")
-public class Revision {
+@Table(name = "log_Revised")
+public class LogRevised {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +27,17 @@ public class Revision {
   @Column(name = "mastery")
   private MasteryEnum mastery;
 
-  @Column(name = "time_updated")
-  private LocalDateTime timeUpdated;
+  @Column(name = "date_revised")
+  private LocalDateTime dateRevised;
 
-  @Column(name = "urgency")
-  private boolean urgency;
+  @Column(name = "time_needed_to_finish_revision")
+  private LocalTime timeNeededToFinishRevision;
 
   @Column(name = "ref_username", nullable = false)
   private String refUserName;
 
 
-  public Revision() {
+  public LogRevised() {
 
   }
 
@@ -95,39 +96,39 @@ public class Revision {
   }
 
   /**
-   * Public Getter of the timeUpdated
+   * Public Getter of the dateRevised
    *
-   * @return timeUpdated
+   * @return dateRevised
    */
-  public LocalDateTime getTimeUpdated() {
-    return timeUpdated;
+  public LocalDateTime getDateRevised() {
+    return dateRevised;
   }
 
   /**
-   * Public Setter of the timeUpdated
+   * Public Setter of the dateRevised
    *
-   * @param timeUpdated the timeUpdated to set
+   * @param dateRevised the dateRevised to set
    */
-  public void setTimeUpdated(LocalDateTime timeUpdated) {
-    this.timeUpdated = timeUpdated;
+  public void setDateRevised(LocalDateTime dateRevised) {
+    this.dateRevised = dateRevised;
   }
 
   /**
-   * Public Getter of the urgency
+   * Public Getter of the timeNeededToFinishRevision
    *
-   * @return urgency
+   * @return timeNeededToFinishRevision
    */
-  public boolean isUrgency() {
-    return urgency;
+  public LocalTime getTimeNeededToFinishRevision() {
+    return timeNeededToFinishRevision;
   }
 
   /**
-   * Public Setter of the urgency
+   * Public Setter of the timeNeededToFinishRevision
    *
-   * @param urgency the urgency to set
+   * @param timeNeededToFinishRevision the timeNeededToFinishRevision to set
    */
-  public void setUrgency(boolean urgency) {
-    this.urgency = urgency;
+  public void setTimeNeededToFinishRevision(LocalTime timeNeededToFinishRevision) {
+    this.timeNeededToFinishRevision = timeNeededToFinishRevision;
   }
 
   /**
