@@ -111,35 +111,6 @@ public class ControllerMain {
   }
 
 
-/*  @GetMapping(produces = "application/json", path = "/automatic-choice-give-revision-to-revise")
-  public Revision automaticChoiceGiveRevisionToRevise() {
-    getCurrentUserFromDataBase();
-
-    Revision revisionToReturn = new Revision();
-
-    //find all by Order Ascending QuartersNumber
-    List<Revision> myListOfRevisions = idaoRevision.findAllByRefUserNameOrderByQuarterNumberAsc(
-        this.currentUser);
-
-    //by order of urgency
-    List<Revision> listMasteryBad = myListOfRevisions.stream()
-        .filter(r -> MasteryEnum.Bad.equals(r.getMastery())).collect(Collectors.toList());
-
-    if (!listMasteryBad.isEmpty()) {
-      int max = listMasteryBad.size() - 1;
-      int min = 0;
-
-      //get random index value
-      Random rand = new Random();
-      int randomValueOfIndex = rand.nextInt((max - min) + 1) + min;
-
-      revisionToReturn = listMasteryBad.get(randomValueOfIndex);
-    }
-
-    //Return the Chosen Revision
-    return revisionToReturn;
-  }*/
-
   //TODO: Can use parameters for this
   //TODO: Add Mapper from Revision to LogRevised
   @PostMapping(produces = "application/json", path = "/change-mastery/{quarter}/{mastery}/{timer}")
@@ -163,12 +134,18 @@ public class ControllerMain {
     newLogRevised.setRefUserName(this.currentUser);
     newLogRevised.setTimeNeededToFinishRevision(convertedTimer);
 
+    //if newly added add the date and set urgent for frequent revision
     if (revision.getTimeAdded() == null) {
       revision.setTimeAdded(LocalDateTime.now());
+      revision.setUrgency(true);
     }
     revision.setTimeUpdated(LocalDateTime.now());
 
-//TODO: add revision time Updated
+    //if added for more than a week set the urgency to false
+    if (revision.getTimeAdded().isBefore(LocalDateTime.now().minusDays(7))) {
+      revision.setUrgency(false);
+    }
+
     if (EnumUtils.isValidEnum(MasteryEnum.class, mastery)) {
       revision.setMastery(MasteryEnum.valueOf(mastery));
       newLogRevised.setMastery(MasteryEnum.valueOf(mastery));
@@ -185,4 +162,4 @@ public class ControllerMain {
 //TODO: need to add Constraints not Null to entity or dto.
   //TODO: check if     LocalTime localTime = LocalTime.parse("01:2");  is on the front cause it will throw an error
 }
-//TODO: urgency flag to off when day surpasses 2 week after being added
+
