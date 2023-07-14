@@ -35,6 +35,9 @@ public class Revision {
   @Column(name = "ref_username", nullable = false)
   private String refUserName;
 
+  @Column(name = "time_added")
+  private LocalDateTime timeAdded;
+
 
   public Revision() {
 
@@ -146,5 +149,23 @@ public class Revision {
    */
   public void setRefUserName(String refUserName) {
     this.refUserName = refUserName;
+  }
+
+  /**
+   * Public Getter of the timeAdded
+   *
+   * @return timeAdded
+   */
+  public LocalDateTime getTimeAdded() {
+    return timeAdded;
+  }
+
+  /**
+   * Public Setter of the timeAdded
+   *
+   * @param timeAdded the timeAdded to set
+   */
+  public void setTimeAdded(LocalDateTime timeAdded) {
+    this.timeAdded = timeAdded;
   }
 }

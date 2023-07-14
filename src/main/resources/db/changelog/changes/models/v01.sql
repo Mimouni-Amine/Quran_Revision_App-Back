@@ -8,6 +8,7 @@ create table revision
     time_updated   timestamp,
     urgency        boolean default false,
     ref_username   varchar(50) not null,
+    time_added     timestamp,
     primary key (id)
 );
 

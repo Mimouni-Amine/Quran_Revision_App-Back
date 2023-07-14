@@ -1,5 +1,6 @@
 package com.quran.quran_hizb_revision_app.Others;
 
+import com.quran.quran_hizb_revision_app.Entities.MasteryEnum;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class LocalTime2 {
     LocalDate localDate = LocalDate.now(z);  // Always pass a time zone.
 
     LocalDateTime localDateTime = LocalDateTime.now();
-    LocalTime localTime = LocalTime.parse("01:2");
+    LocalTime localTime = LocalTime.parse("01:20");
 
     Instant rightNow = Instant.now();
 
@@ -22,8 +23,20 @@ public class LocalTime2 {
     System.out.println(localDate);
     System.out.println(localDateTime);
     System.out.println(LocalTime.now());
+    System.out.println(LocalDateTime.now().minusDays(1));
+    System.out.println(LocalDateTime.now().toLocalDate().atStartOfDay());
 
+    String toTestEnum = "Average";
+    boolean enumContainsString = false;
 
+    for (MasteryEnum e : MasteryEnum.values()) {
+      if (e.name().equals(toTestEnum)) {
+        enumContainsString = true;
+      }
+      System.out.println(e);
+    }
+
+    System.out.println(enumContainsString);
   }
 }
 

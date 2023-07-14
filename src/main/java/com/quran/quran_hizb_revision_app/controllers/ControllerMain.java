@@ -8,12 +8,11 @@ import com.quran.quran_hizb_revision_app.Entities.User;
 import com.quran.quran_hizb_revision_app.dao.IDAOLogRevised;
 import com.quran.quran_hizb_revision_app.dao.IDAORevision;
 import com.quran.quran_hizb_revision_app.dao.IDAOUser;
+import com.quran.quran_hizb_revision_app.process.RandomProcessImpl;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -98,6 +97,24 @@ public class ControllerMain {
   public Revision automaticChoiceGiveRevisionToRevise() {
     getCurrentUserFromDataBase();
 
+    //find all Revisions by Order Ascending QuartersNumber
+    List<Revision> myListOfRevisions = idaoRevision.findAllByRefUserNameOrderByQuarterNumberAsc(
+        this.currentUser);
+
+    RandomProcessImpl randomProcessImpl = new RandomProcessImpl();
+
+    //Return the Chosen Revision
+    Revision chosenRevision = randomProcessImpl.getRandom(myListOfRevisions);
+    System.out.println(chosenRevision.getQuarterNumber());
+    System.out.println(chosenRevision.getMastery());
+    return chosenRevision;
+  }
+
+
+/*  @GetMapping(produces = "application/json", path = "/automatic-choice-give-revision-to-revise")
+  public Revision automaticChoiceGiveRevisionToRevise() {
+    getCurrentUserFromDataBase();
+
     Revision revisionToReturn = new Revision();
 
     //find all by Order Ascending QuartersNumber
@@ -121,8 +138,7 @@ public class ControllerMain {
 
     //Return the Chosen Revision
     return revisionToReturn;
-  }
-
+  }*/
 
   //TODO: Can use parameters for this
   //TODO: Add Mapper from Revision to LogRevised
@@ -147,6 +163,11 @@ public class ControllerMain {
     newLogRevised.setRefUserName(this.currentUser);
     newLogRevised.setTimeNeededToFinishRevision(convertedTimer);
 
+    if (revision.getTimeAdded() == null) {
+      revision.setTimeAdded(LocalDateTime.now());
+    }
+    revision.setTimeUpdated(LocalDateTime.now());
+
 //TODO: add revision time Updated
     if (EnumUtils.isValidEnum(MasteryEnum.class, mastery)) {
       revision.setMastery(MasteryEnum.valueOf(mastery));
@@ -162,4 +183,6 @@ public class ControllerMain {
   }
 
 //TODO: need to add Constraints not Null to entity or dto.
+  //TODO: check if     LocalTime localTime = LocalTime.parse("01:2");  is on the front cause it will throw an error
 }
+//TODO: urgency flag to off when day surpasses 2 week after being added
