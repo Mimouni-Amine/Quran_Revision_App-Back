@@ -98,7 +98,22 @@ public class RandomProcessImpl {
   public void chooseTheRevisionOutofItsList() {
     //get the corresponding list
     List<Revision> changingTypeListOfRevisions = this.listRevision.stream()
-        .filter(r -> r.getMastery().name().equals(this.revisionStringResult)).collect(
+        .filter(r -> r.getMastery().name().equals(this.revisionStringResult))
+        .filter(r -> {
+          if ((r.getTimeAdded() == null) || (
+              // To get the Start of the day at 00:00
+              r.getTimeAdded().isBefore(LocalDateTime.now().toLocalDate().atStartOfDay())
+
+              // can Also use the code below 1 day before current time
+              // r.getTimeAdded().isBefore(LocalDateTime.now().minusDays(1))
+          )
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .collect(
             Collectors.toList());
 
     //get one random element of the previous list
