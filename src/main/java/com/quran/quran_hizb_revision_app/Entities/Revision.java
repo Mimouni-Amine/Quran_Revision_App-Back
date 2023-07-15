@@ -38,6 +38,12 @@ public class Revision {
   @Column(name = "time_added")
   private LocalDateTime timeAdded;
 
+  @Column(name = "manually_set_urgency_flag")
+  private boolean manuallySetUrgencyFlag;
+
+  @Column(name = "date_of_setting_the_manual_urgency_flag")
+  private LocalDateTime dateOfSettingTheManualUrgencyFlag;
+
 
   public Revision() {
 
@@ -167,5 +173,42 @@ public class Revision {
    */
   public void setTimeAdded(LocalDateTime timeAdded) {
     this.timeAdded = timeAdded;
+  }
+
+  /**
+   * Public Getter of the manuallySetUrgencyFlag
+   *
+   * @return manuallySetUrgencyFlag
+   */
+  public boolean isManuallySetUrgencyFlag() {
+    return manuallySetUrgencyFlag;
+  }
+
+  /**
+   * Public Setter of the manuallySetUrgencyFlag
+   *
+   * @param manuallySetUrgencyFlag the manuallySetUrgencyFlag to set
+   */
+  public void setManuallySetUrgencyFlag(boolean manuallySetUrgencyFlag) {
+    this.manuallySetUrgencyFlag = manuallySetUrgencyFlag;
+  }
+
+  /**
+   * Public Getter of the dateOfSettingTheManualUrgencyFlag
+   *
+   * @return dateOfSettingTheManualUrgencyFlag
+   */
+  public LocalDateTime getDateOfSettingTheManualUrgencyFlag() {
+    return dateOfSettingTheManualUrgencyFlag;
+  }
+
+  /**
+   * Public Setter of the dateOfSettingTheManualUrgencyFlag
+   *
+   * @param dateOfSettingTheManualUrgencyFlag the dateOfSettingTheManualUrgencyFlag to set
+   */
+  public void setDateOfSettingTheManualUrgencyFlag(
+      LocalDateTime dateOfSettingTheManualUrgencyFlag) {
+    this.dateOfSettingTheManualUrgencyFlag = dateOfSettingTheManualUrgencyFlag;
   }
 }
