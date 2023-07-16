@@ -78,7 +78,7 @@ public class RandomProcessImpl {
               r -> {
                 if ((r.getTimeAdded() == null) || (
                     // To get the Start of the day at 00:00
-                    r.getTimeAdded().isBefore(LocalDateTime.now().toLocalDate().atStartOfDay())
+                    r.getTimeUpdated().isBefore(LocalDateTime.now().toLocalDate().atStartOfDay())
 
                     // can Also use the code below 1 day before current time
                     // r.getTimeAdded().isBefore(LocalDateTime.now().minusDays(1))
@@ -102,7 +102,7 @@ public class RandomProcessImpl {
         .filter(r -> {
           if ((r.getTimeAdded() == null) || (
               // To get the Start of the day at 00:00
-              r.getTimeAdded().isBefore(LocalDateTime.now().toLocalDate().atStartOfDay())
+              r.getTimeUpdated().isBefore(LocalDateTime.now().toLocalDate().atStartOfDay())
 
               // can Also use the code below 1 day before current time
               // r.getTimeAdded().isBefore(LocalDateTime.now().minusDays(1))
@@ -167,7 +167,7 @@ public class RandomProcessImpl {
     } // Mastery 5%
     else {
       if (boolMastery) {
-        return "Mastery";
+        return "Master";
       } else {
         return "nothing";
       }
@@ -206,7 +206,7 @@ public class RandomProcessImpl {
     } // Mastery 10%
     else {
       if (boolMastery) {
-        return "Mastery";
+        return "Master";
       } else {
         return "nothing";
       }
