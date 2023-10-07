@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,11 +47,11 @@ public class ControllerMain {
   }
 
   @GetMapping("/current-user")
-  public void getCurrentUserFromDataBase() {
+  public String getCurrentUserFromDataBase() {
     //find all by Order Ascending QuartersNumber
     Optional<User> currentUserFound = idaoUser.findById(999);
     this.currentUser = currentUserFound.get().getUserName().substring(1);
-    System.out.println(currentUser);
+    return this.currentUser;
   }
 
   //TODO: also separate later the pages (Login Folder) (Mode-Choice Folder)
@@ -93,6 +94,12 @@ public class ControllerMain {
   // (start with it then -> bad -> good -> master....  or give even master ..... plus add mode for revision
   // that I would need to revise (or i can just use urgency for quarters newly learned))
 
+  /**
+   * Get Method to get the Revision Object that was Chosen Automatically
+   *
+   * @return chosenRevision The Revision That was Automatically Chosen
+   */
+
   @GetMapping(produces = "application/json", path = "/automatic-choice-give-revision-to-revise")
   public Revision automaticChoiceGiveRevisionToRevise() {
     getCurrentUserFromDataBase();
@@ -108,6 +115,39 @@ public class ControllerMain {
     System.out.println(chosenRevision.getQuarterNumber());
     System.out.println(chosenRevision.getMastery());
     return chosenRevision;
+  }
+
+
+  /**
+   * Get Method to know the Total Revised Quarters Today
+   *
+   * @return chosenRevision The Revision That was Automatically Chosen
+   */
+
+  //TODO: Different from total from logs since this total will count each quarter only 1 time => if i try total in 20 days i get 1.5
+  @GetMapping(produces = "application/json", path = "/total-number-of-hizb-revised-today")
+  public double totalRevisedQuartersToday() {
+    getCurrentUserFromDataBase();
+
+    //find all Revisions by Order Ascending QuartersNumber
+    List<Revision> myListOfRevisions = idaoRevision.findAllByRefUserNameOrderByQuarterNumberAsc(
+        this.currentUser);
+
+    //the revisions revised today only
+    List<Revision> revisedToday = myListOfRevisions.stream()
+        .filter(revision -> {
+              return (
+                  (revision.getTimeUpdated() != null) && revision.getTimeUpdated()
+                      .isAfter(LocalDateTime.now().minusDays(1))
+              );
+            }
+        ).collect(Collectors.toList());
+
+    double numberOfQuarters = revisedToday.size();
+
+    double numberOfHizb = numberOfQuarters / 4;
+
+    return numberOfHizb;
   }
 
 
