@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.quran.quran_hizb_revision_app.QuranHizbRevisionAppApplic
+ ation
+
