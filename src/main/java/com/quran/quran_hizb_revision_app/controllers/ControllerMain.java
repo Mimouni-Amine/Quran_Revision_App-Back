@@ -9,6 +9,8 @@ import com.quran.quran_hizb_revision_app.dao.IDAOLogRevised;
 import com.quran.quran_hizb_revision_app.dao.IDAORevision;
 import com.quran.quran_hizb_revision_app.dao.IDAOUser;
 import com.quran.quran_hizb_revision_app.process.RandomProcessImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
+@Tag(name = "main Controller", description = "the main api to use for the quran revision")
 public class ControllerMain {
 
 
@@ -46,6 +49,16 @@ public class ControllerMain {
     this.idaoLogRevised = idaoLogRevised;
   }
 
+  @Operation(summary = "List all the Users")
+  @GetMapping("/list-all-users")
+  public ResponseEntity<List<User>> getAllUsers() {
+    List<User> listUsers = idaoUser.findAllByOrderByUserName();
+
+    //Return the Get Response
+    return new ResponseEntity<>(listUsers, HttpStatus.OK);
+  }
+
+  @Operation(summary = "get the current user from the database")
   @GetMapping("/current-user")
   public String getCurrentUserFromDataBase() {
     //find all by Order Ascending QuartersNumber
